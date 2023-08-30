@@ -10,8 +10,8 @@ void print(int data[], int SIZE);
  * This program uses quick sort algorithm to sort a random array
  */
 
-//int main() {
-int quickSort() {
+int main() {
+//int quickSort() {
 	const int SIZE = 10;
 	int data[SIZE] = { 34, 12, 67, 89, 45, 54, 10, 5, 66, 26 };
 
@@ -34,7 +34,29 @@ void quickSort(int data[], int left, int right) {
 
 //Todo: Implement partitionIt function
 int partitionIt(int data[], int left, int right) {
+	int leftPtr = left - 1;
+	int rightPtr = right;
 
+	int pivotValue = data[right];
+
+	while (true) {	//Infinite loop -
+		while (data[++leftPtr] <= pivotValue && leftPtr <= right);
+		while (data[--rightPtr] >= pivotValue && rightPtr >= left);
+
+		if (rightPtr < leftPtr) {
+			int temp = data[leftPtr];
+			data[leftPtr] = data[right];
+			data[right] = temp;
+
+			break;	//break when pointer cross each other
+		}
+
+		int temp = data[leftPtr];
+		data[leftPtr] = data[rightPtr];
+		data[rightPtr] = temp;
+	}
+
+	return leftPtr;
 }
 
 void print(int data[], int SIZE) {
