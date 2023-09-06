@@ -1,17 +1,14 @@
 #include <iostream>
+#include "quick_sort.h"
 
 using namespace std;
-
-void quickSort(int data[], int left, int right);
-int partitionIt(int data[], int left, int right);
-void print(int data[], int SIZE);
 
 /*
  * This program uses quick sort algorithm to sort a random array
  */
 
-int main() {
-//int quickSort() {
+//int main() {
+int quickSort() {
 	const int SIZE = 10;
 	int data[SIZE] = { 34, 12, 67, 89, 45, 54, 10, 5, 66, 26 };
 
@@ -20,7 +17,10 @@ int main() {
 	print(data, SIZE);
 
 	//Todo: Implement template for quickSort()
-	//double data2[SIZE] = { 34.5, 12.1, 67.3, 89.5, 45.2, 54.8, 10.9, 5.1, 66.6, 26.4 };
+	double data2[SIZE] = { 34.5, 12.1, 67.3, 89.5, 45.2, 54.8, 10.9, 5.1, 66.6, 26.4 };
+	print(data2, SIZE);
+	quickSort(data2, 0, SIZE - 1);
+	print(data2, SIZE);
 
 	//Todo: Seperate header & implementation
 	
@@ -28,41 +28,55 @@ int main() {
 }
 
 //Todo: Implement quickSort() function
-void quickSort(int data[], int left, int right) {
+template <class T>
+void quickSort(T data[], int left, int right) {
+	if (right < left) {	//base case
+		return;
+	}
+	else {
+		int partitionIndex = partitionIt(data, left, right);
 
+		quickSort(data, left, partitionIndex - 1);
+		quickSort(data, partitionIndex + 1, right);
+	}
 }
 
 //Todo: Implement partitionIt function
-int partitionIt(int data[], int left, int right) {
+template <class T>
+int partitionIt(T data[], int left, int right) {
 	int leftPtr = left - 1;
 	int rightPtr = right;
 
-	int pivotValue = data[right];
+	T pivotValue = data[right];
 
 	while (true) {	//Infinite loop -
-		while (data[++leftPtr] <= pivotValue && leftPtr <= right);
+		while (data[++leftPtr] < pivotValue);
 		while (data[--rightPtr] >= pivotValue && rightPtr >= left);
 
 		if (rightPtr < leftPtr) {
-			int temp = data[leftPtr];
-			data[leftPtr] = data[right];
-			data[right] = temp;
+			swapIt(data, leftPtr, right);
 
 			break;	//break when pointer cross each other
 		}
 
-		int temp = data[leftPtr];
-		data[leftPtr] = data[rightPtr];
-		data[rightPtr] = temp;
+		swapIt(data, leftPtr, rightPtr);
 	}
 
 	return leftPtr;
 }
 
-void print(int data[], int SIZE) {
+template <class T>
+void print(T data[], int SIZE) {
 	for (int i = 0; i < SIZE; i++) {
 		cout << data[i] << " ";
 	}
 
 	cout << endl;
+}
+
+template <class T>
+void swapIt(T data[], int left, int right) {
+	T temp = data[left];
+	data[left] = data[right];
+	data[right] = temp;
 }
