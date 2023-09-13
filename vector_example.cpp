@@ -23,18 +23,31 @@ int vectorMain() {
 	}
 
 	//Todo: Use standard for loop to print data
-
+	for (int i = 0; i < data.size(); i++) {
+		//cout << data[i] << " " << endl;
+		cout << data.at(i) << " ";
+	}
+	cout << endl;
 
 	cout << "Vector Capacity: " << data.capacity() << endl;
 
 	//Todo: Use enhanced for loop to print data
-
+	for (int d : data) {
+		cout << d << " ";
+	}
+	cout << endl;
 
 	//Todo: Sort data in vector
-
+	for (vector<int>::iterator itr = data.begin(); itr != data.end(); itr++) {
+		cout << *itr << " ";
+	}
+	cout << endl;
 
 	//Todo: Using iterators (named vs auto) with for loop and print data
-
+	for (auto itr = data.begin(); itr != data.end(); itr++) {
+		cout << *itr << " ";
+	}
+	cout << endl;
 
 	return 0;
 }
