@@ -8,8 +8,8 @@ using namespace std;
 void print(ifstream&);
 void printFormatted(ifstream&);
 
-int main() {
-//int FileIOExample() {
+//int main() {
+int FileIOExample() {
 	const string filename = "C:\\Temp\\CmpSci236\\fileio_example.txt";
 
 	//Todo: Create ofstream object outFile
@@ -39,17 +39,27 @@ int main() {
 		return 1;
 	}
 
-	/*
+	int id;
+	string name;
+	double price;
+	cout << "eof? " << inFile.eof() << ", good? " << inFile.good() << endl;
+	int i = 0;
 	while (!inFile.eof()) {
 		inFile >> id;
 		inFile >> name;
 		inFile >> price;
 
 		cout << id << " - " << name << " - $" << price << endl;
-	}
-	
 
-	*/
+		if (++i >= 2) break;
+	}
+	cout << "eof? " << inFile.eof() << ", good? " << inFile.good() << endl;
+
+	//inFile.clear();
+	cout << "eof? " << inFile.eof() << ", good? " << inFile.good() << endl;
+	inFile.seekg(0L, ios::beg);
+	cout << "--------------------------------" << endl;
+
 	//Todo: call print()
 	print(inFile);
 
