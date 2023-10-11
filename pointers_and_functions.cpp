@@ -9,8 +9,8 @@ double calculateAverage(int*, int);
 int& tellMe();
 int* surpriseMe();
 
-int main() {
-//int pointersAndFunctions() {
+//int main() {
+int pointersAndFunctions() {
 	int x = 20;
 	int y = 55;
 
