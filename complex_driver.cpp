@@ -7,8 +7,8 @@ double addReal(const Complex& complex1, const Complex& complex2) {
 	return complex1.real + complex2.real;
 }
 
-int main() {
-//int complexDriver() {
+//int main() {
+int complexDriver() {
 	Complex c1;
 	Complex c2(-4.5, 5.6);
 	Complex* c3 = new Complex();
