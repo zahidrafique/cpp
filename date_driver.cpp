@@ -30,6 +30,15 @@ int main() {
 	cout << d.get() << " -- " << d.convert() << endl;
 	
 	cout << "Is " << b.get() << " smaller than " << a.get() << "? " << ((b < a) ? "Yes" : "No") << endl;
+
+	Date e(10, 30, 2023);
+	cout << "Today's date: " << e << ", day: " << e.dayOfWeek() << endl;
+
+	Date f;
+	cout << "Enter date (mm/dd/yyyy): ";
+	cin >> f;
+	cout << "You enterd: " << f << endl;
+
 	/*
 	cout << "The day on " << a.get() << " is " << a.dayOfWeek() << endl;
 	cout << "The day on " << b.get() << " is " << b.dayOfWeek() << endl;

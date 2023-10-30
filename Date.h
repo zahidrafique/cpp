@@ -15,12 +15,16 @@ public:
 	Date(int month = 1, int day = 1, int year = 1970) { set(month, day, year); }
 
 	void show();
-	std::string get();
+	std::string get() const;
 	void set(int, int, int);
 
 	bool isLeapYear();
 	long convert() const;
+	int dayOfWeek();
 
 	bool operator==(const Date&);
 	bool operator<(const Date&);
+
+	friend std::ostream& operator<<(std::ostream&, const Date&);
+	friend std::istream& operator>>(std::istream&, Date&);
 };
