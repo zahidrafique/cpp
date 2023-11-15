@@ -74,8 +74,8 @@ double Rocket::getCapsuleVolume() {
 	return (PI * radius * radius * coneHeight) / 3;
 }
 
-int main() {
-//int TestInheritanceMain() {
+//int main() {
+int TestInheritanceMain() {
 	Circle c(5.2);
 	cout << "Area of circle with radius 5.2 is: " << c.getArea() << endl;
 
