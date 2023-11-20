@@ -7,7 +7,7 @@
 class SISystem
 {
 private:
-	User user;
+	User* user;
 	bool gradesUpdated;
 	std::map<long, Student*> students;
 	std::map<std::string, Course*> courses;
@@ -25,8 +25,8 @@ public:
 	void addCourse(long, std::string, char);
 	void updateGrade(long, std::string, char);
 
-	void handleRequest(int);
-	User login();
+	void handleRequest(char);
+	bool login();
 	void printMenu();
 
 };

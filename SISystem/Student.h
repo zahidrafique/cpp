@@ -22,6 +22,7 @@ public:
 	std::string getReport();
 	double getGPA();
 
-	std::vector<char> getCourseGrades();
+	int getCourseCount();
+	std::string getCourseGrades(int index);
 };
 

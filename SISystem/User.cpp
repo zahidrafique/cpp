@@ -36,11 +36,12 @@ bool User::authenticate() {
 	string temp;
 
 	while (true) {
-		userFile >> temp;	//Read temp and throw away
+		userFile >> this->id;	//Read temp and throw away
 		if (userFile.eof()) break;
 
 		userFile >> temp; //Read first name and throw away
-		userFile >> temp; //Read last name and throw away
+		this->firstName = temp;
+		userFile >> this->lastName; //Read last name and throw away
 
 		userFile >> temp; //Read email
 		if (temp == this->email) {

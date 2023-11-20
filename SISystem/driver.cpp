@@ -6,17 +6,17 @@
 using namespace std;
 
 int main() {
-	/*
-	User u1("ryan@canyons.edu", "test123");
-	if (u1.authenticate()) {
-		cout << "User authenticated successfully" << endl;
-	}
-	else {
-		cout << "User authentication failed!" << endl;
-	}
-	*/
-
 	SISystem siSystem;
+	if (siSystem.login()) {
+		while (true) {
+			char o;
+			cout << "Choose an option: ";
+			cin >> o;
+			if (o == 'q') break;
+
+			siSystem.handleRequest(o);
+		}
+	}
 
 	return 0;
 }

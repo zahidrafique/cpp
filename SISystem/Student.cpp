@@ -26,6 +26,10 @@ int Student::getTotalCourseCredits() {
 	return total;
 }
 
+int Student::getCourseCount() {
+	return courses.size();
+}
+
 Student::Student(long id, string firstName, string lastName) {
 	this->id = id;
 	this->firstName = firstName;
@@ -81,6 +85,6 @@ double Student::getGPA() {
 	return gradePoints / totalCredits;
 }
 
-std::vector<char> Student::getCourseGrades() {
-	return grades;
+std::string Student::getCourseGrades(int index) {
+	return courses[index]->getCode() + " " + grades[index];
 }
