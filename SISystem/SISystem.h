@@ -2,11 +2,13 @@
 #include "User.h"
 #include "Student.h"
 #include "Course.h"
+#include "ExceptionHandler.h"
 #include <map>
 
 class SISystem
 {
 private:
+	ExceptionHandler excpetionHandler;
 	User* user;
 	bool gradesUpdated;
 	std::map<long, Student*> students;

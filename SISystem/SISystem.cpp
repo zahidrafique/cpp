@@ -139,7 +139,7 @@ void SISystem::printReport(long id) {
 	Student* s = students[id];
 	
 	if (s == nullptr) {
-		cout << "Student with id: " << id << " does not exist!" << endl;
+		throw INVALID_STUDENT_ID;
 	}
 	else {
 		cout << s->getReport();
@@ -150,13 +150,13 @@ void SISystem::addCourse(long id, std::string code, char grade) {
 	Student* s = students[id];
 	
 	if (s == nullptr) {
-		cout << "Student with id: " << id << " does not exist!" << endl;
+		throw INVALID_STUDENT_ID;
 	}
 	else {
 		Course* c = courses[code];
 
 		if (c == nullptr) {
-			cout << "Invalid course code: " << code << endl;
+			throw INVALID_COURSE_ID;
 		}
 		else {
 			s->addCourse(c, grade);
@@ -169,13 +169,13 @@ void SISystem::updateGrade(long id, std::string code, char grade) {
 	Student* s = students[id];
 
 	if (s == nullptr) {
-		cout << "Student with id: " << id << " does not exist!" << endl;
+		throw INVALID_STUDENT_ID;
 	}
 	else {
 		Course* c = courses[code];
 
 		if (c == nullptr) {
-			cout << "Invalid course code: " << code << endl;
+			throw INVALID_COURSE_ID;
 		}
 		else {
 			s->updateGrade(code, grade);
@@ -185,47 +185,52 @@ void SISystem::updateGrade(long id, std::string code, char grade) {
 }
 
 void SISystem::handleRequest(char option) {
-	if (user->isAuthorized()) {
-		if (option == 'p' && (user->getRole() == Role::Student || user->getRole() == Role::Staff || user->getRole() == Role::Faculty)) {
-			if (user->getRole() == Role::Student) {
-				printReport(user->getId());
+	try {
+		if (user->isAuthorized()) {
+			if (option == 'p' && (user->getRole() == Role::Student || user->getRole() == Role::Staff || user->getRole() == Role::Faculty)) {
+				if (user->getRole() == Role::Student) {
+					printReport(user->getId());
+				}
+				else {
+					long id;
+					cout << "Please enter the student Id: ";
+					cin >> id;
+
+					printReport(id);
+				}
 			}
-			else {
+			else if (option == 'a' && (user->getRole() == Role::Staff || user->getRole() == Role::Faculty)) {
+				printReport();
+			}
+			else if ((option == 'c' || option == 'u') && user->getRole() == Role::Faculty) {
 				long id;
-				cout << "Please enter the student Id: ";
+				string code;
+				char grade;
+
+				cout << "Pleaes enter the student id: ";
 				cin >> id;
+				cout << "Please enter the course code: ";
+				cin >> code;
+				cout << "Please enter the grade: ";
+				cin >> grade;
 
-				printReport(id);
+				if (option == 'c') {
+					addCourse(id, code, grade);
+				}
+				else {
+					updateGrade(id, code, grade);
+				}
 			}
-		}
-		else if (option == 'a' && (user->getRole() == Role::Staff || user->getRole() == Role::Faculty)) {
-			printReport();
-		}
-		else if ((option == 'c' || option == 'u') && user->getRole() == Role::Faculty) {
-			long id;
-			string code;
-			char grade;
-
-			cout << "Pleaes enter the student id: ";
-			cin >> id;
-			cout << "Please enter the course code: ";
-			cin >> code;
-			cout << "Please enter the grade: ";
-			cin >> grade;
-
-			if (option == 'c') {
-				addCourse(id, code, grade);
+			else if (option == 'q') {
+				exit(0);
 			}
 			else {
-				updateGrade(id, code, grade);
+				throw INVALID_REQUEST_OPTION;
 			}
 		}
-		else if (option == 'q') {
-			exit(0);
-		}
-		else {
-			throw INVALID_REQUEST_OPTION;
-		}
+	}
+	catch (int e) {
+		cout << "Error: " << excpetionHandler.what(e) << endl;
 	}
 }
 
@@ -242,9 +247,6 @@ bool SISystem::login() {
 		user = u;
 		printMenu();
 		return true;
-	}
-	else {
-		cout << "Please check your email & password and try again!!!" << endl;
 	}
 
 	return false;
@@ -266,6 +268,6 @@ void SISystem::printMenu() {
 		cout << "\tType q for Quit" << endl;
 	}
 	else {
-		cout << "You are not authroized to perform any operations!!!" << endl;
+		throw AUTHORIZATION_FAILED_ERROR;
 	}
 }
