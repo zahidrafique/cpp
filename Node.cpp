@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Node.h"
+#include <string>
 
 Node::Node() {
 	id = 0;
@@ -57,6 +58,11 @@ void Node::setParent(Node* parent) {
 	this->parent = parent;
 }
 
+std::string Node::toString() {
+
+	return "{" + std::to_string(id) + ", " + std::to_string(data) + "}";
+}
+
 void  Node::print() {
-	std::cout << "{" << id << ", " << data << "}";
+	std::cout << toString();
 }

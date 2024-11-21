@@ -8,7 +8,7 @@ private:
 	Node* root;
 	void inOrderRecurse(Node* node);
 	Node* getInOrderSuccessor(Node* node);
-	void replaceChild(Node* node, Node* newChild);
+	void replaceNode(Node* node, Node* newChild);
 
 public:
 	BST();

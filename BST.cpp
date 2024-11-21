@@ -113,14 +113,13 @@ void BST::inOrderRecurse(Node* node) {
 
 	inOrderRecurse(node->getLeftChild());
 	node->print();
-	std::cout << " -> ";
+	std::cout << "\t";
 	inOrderRecurse(node->getRightChild());
 }
 
 void BST::inOrderTraverse() {
 	inOrderRecurse(root);
 	std::cout << std::endl << std::endl;
-
 }
 
 Node* BST::getInOrderSuccessor(Node* node) {
@@ -133,7 +132,7 @@ Node* BST::getInOrderSuccessor(Node* node) {
 	return successor;
 }
 
-void BST::replaceChild(Node* node, Node* newChild) {
+void BST::replaceNode(Node* node, Node* newChild) {
 	Node* parent = node->getParent();
 	if (parent != nullptr) {		//For all non-root nodes
 		if (parent->getLeftChild() == node) {
@@ -153,23 +152,23 @@ void BST::replaceChild(Node* node, Node* newChild) {
 }
 
 void BST::deleteNode(Node* node) {
-	if (node == nullptr || root == nullptr) {
+	if (node == nullptr || isEmpty()) {
 		return;
 	}
 
 	if (node->getLeftChild() == nullptr && node->getRightChild() == nullptr) {	//Case 2: when delete node is a leaf
-		replaceChild(node, nullptr);
+		replaceNode(node, nullptr);
 	}	
 	else if (node->getLeftChild() == nullptr) {		//Case 3a: when delete node has only right child
-		replaceChild(node, node->getRightChild());
+		replaceNode(node, node->getRightChild());
 	} 
 	else if (node->getRightChild() == nullptr) {		//Case 3b:when delete node has only left child
-		replaceChild(node, node->getLeftChild());
+		replaceNode(node, node->getLeftChild());
 	}
 	else {			//Case 4: when delete node has both children
 		Node* successor = getInOrderSuccessor(node);
 
-		if (node->getRightChild() != successor) {
+		if (successor != node->getRightChild()) {
 			successor->getParent()->setLeftChild(successor->getRightChild());
 			successor->getRightChild()->setParent(successor->getParent());
 
@@ -181,6 +180,18 @@ void BST::deleteNode(Node* node) {
 		node->getLeftChild()->setParent(successor);
 
 		successor->setParent(node->getParent());
+
+		if (root == node) {
+			root = successor;
+		}
+		else {
+			if (node == node->getParent()->getLeftChild()) {
+				node->getParent()->setLeftChild(successor);
+			}
+			else {
+				node->getParent()->setRightChild(successor);
+			}
+		}
 	}
 
 	delete node;

@@ -26,6 +26,7 @@ public:
 	void setRightChild(Node* rightChild);
 	void setParent(Node* parent);
 
+	std::string toString();
 	void print();
 };
 
