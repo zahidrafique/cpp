@@ -5,13 +5,13 @@ using namespace std;
 
 Queue::Queue() {
 	data = new long[DEFAULT_SIZE];
-	this->size = DEFAULT_SIZE;
+	this->capacity = DEFAULT_SIZE;
 	//Queue(DEFAULT_SIZE);
 }
 
 Queue::Queue(int size) {
 	data = new long[size];
-	this->size = size;
+	this->capacity = size;
 }
 
 Queue::~Queue() {
@@ -26,11 +26,16 @@ void Queue::insert(long value) {
 		return;				//Extend array size in this case
 	}
 
-	if (rear == size - 1) {
+	if (isEmpty()) {
+		front = 0;
 		rear = 0;
-	}
-	else {
-		rear++;
+	} else {
+		if (rear == capacity - 1) {
+			rear = 0;
+		}
+		else {
+			rear++;
+		}
 	}
 
 	data[rear] = value;
@@ -45,11 +50,16 @@ long Queue::remove() {
 	long temp = data[front];
 	dataSize--;
 
-	if (front == size - 1) {
-		front = 0;
+	if (isEmpty()) {
+		front = -1;
+		rear = -1;
 	}
 	else {
 		front++;
+
+		if (front >= capacity) {
+			front = 0;
+		}
 	}
 
 	return temp;
@@ -67,8 +77,9 @@ long Queue::peek() {
 bool Queue::isEmpty() {
 	return dataSize == 0;
 }
+
 bool Queue::isFull() {
-	return dataSize == size;
+	return dataSize == capacity;
 }
 
 int Queue::getSize() {
@@ -78,8 +89,7 @@ int Queue::getSize() {
 void Queue::print() {
 	cout << "[";
 	if (!isEmpty()) {
-		int count = 0;
-		int endIndex = (rear >= front) ? rear : size - 1;
+		int endIndex = (rear >= front) ? rear : capacity - 1;
 
 		for (int i = front; i <= endIndex; i++) {
 			if (i > front) {
